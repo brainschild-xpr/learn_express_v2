@@ -1,6 +1,8 @@
 GET http://localhost:3000/subscribers
 ###
-GET http://localhost:3000/subscribers/5e287964dee9ca39702907b2
+GET http://localhost:3000/subscribers/5e286a372a0057440cab45e5
+###
+DELETE http://localhost:3000/subscribers/5e28794bdee9ca39702907af
 ###
 DELETE http://localhost:3000/subscribers/5e28794bdee9ca39702907af
 ###
@@ -10,4 +12,12 @@ Content-Type: application/json
 {
 "name": "Martin Shungoh",
 "subscribedToChannel": "WebDev Simplified"
+}
+###
+PATCH  http://localhost:3000/subscribers/5e287948dee9ca39702907ae
+Content-Type: application/json
+
+{
+"name": "Martin Shungoh",
+"subscribedToChannel": "WebDevSimplified"
 }

@@ -9,8 +9,8 @@ router.get('/', async (req, res) => {
     const subscribers = await Subscriber.find()
     console.log(subscribers);
     res.json(subscribers)
-    
-    
+
+
   } catch (error) {
     // console.error();
     res.status(500).json({ message: error.message })
@@ -21,10 +21,11 @@ router.get('/', async (req, res) => {
 // Getting one Subscriber
 router.get('/:id', getSubscriber, (req, res) => {
   console.log('\nRunning from GET/:id');
-  
+
   console.log({
     'Fetched with ID': res.subscriber._id,
-    'JSON DOC Fetched':res.subscriber});
+    'JSON DOC Fetched': res.subscriber
+  });
   res.json(res.subscriber)
   // res.send(
   //   {
@@ -51,23 +52,37 @@ router.post('/', async (req, res) => {
 })
 
 // Updating one
-router.patch('/:id', getSubscriber, (req, res) => {
-
+router.patch('/:id', getSubscriber, async (req, res) => {
+  if (req.body.name != null) {
+    res.subscriber.name = req.body.name
+  }
+  if (req.body.subscribedToChannel != null) {
+    res.subscriber.subscribedToChannel = req.body.subscribedToChannel
+  }
+  try {
+    const updatedSubscriber = await res.subscriber.save()
+    res.json(updatedSubscriber)
+    console.log(updatedSubscriber);
+    
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
 })
 // Deleting one
 router.delete('/:id', getSubscriber, async (req, res) => {
   console.log('\nRunning from DELETE/:id');
-  
+
   console.log({
     'Will be deleting DOC with ID': res.subscriber._id,
-    'JSON DOC To Be Deleted':res.subscriber});
-try {
-  await res.subscriber.remove()
-  res.json({message: 'Subscriber Deleted'})
-  console.log('DOCUMENT DELETED');
-} catch (error) {
-  res.status(500).json({message: error.message})
-}
+    'JSON DOC To Be Deleted': res.subscriber
+  });
+  try {
+    await res.subscriber.remove()
+    res.json({ message: 'Subscriber Deleted' })
+    console.log('DOCUMENT DELETED');
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
 })
 
 // Function for GetSubscribers
