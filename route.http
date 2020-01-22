@@ -1,0 +1,13 @@
+GET http://localhost:3000/subscribers
+###
+GET http://localhost:3000/subscribers/5e287964dee9ca39702907b2
+###
+DELETE http://localhost:3000/subscribers/5e28794bdee9ca39702907af
+###
+POST http://localhost:3000/subscribers
+Content-Type: application/json
+
+{
+"name": "Martin Shungoh",
+"subscribedToChannel": "WebDev Simplified"
+}
