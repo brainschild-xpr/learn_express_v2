@@ -10,10 +10,6 @@ const db_subscribers_url = mongoUri + dbSubscribers
 
 const app = express()
 const db = mongoose.connection
-// const db = mongoose.createConnection(mongoUri, {
-//     useNewUrlParser: true
-//     // useUnifiedTopology: true
-// })
 
 db.on('error', (err) => {
     console.error('Error Occured:', err);
