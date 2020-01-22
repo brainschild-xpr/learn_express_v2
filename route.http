@@ -1,23 +1,25 @@
-GET http://localhost:3000/subscribers
+GET http://localhost:5000/subscribers
+
 ###
-GET http://localhost:3000/subscribers/5e286a372a0057440cab45e5
+GET http://localhost:5000/subscribers/5e286a372a0057440cab45e5
+
 ###
-DELETE http://localhost:3000/subscribers/5e28794bdee9ca39702907af
+DELETE http://localhost:5000/subscribers/5e28794bdee9ca39702907af
+
 ###
-DELETE http://localhost:3000/subscribers/5e28794bdee9ca39702907af
-###
-POST http://localhost:3000/subscribers
+POST http://localhost:5000/subscribers
 Content-Type: application/json
 
 {
 "name": "Martin Shungoh",
-"subscribedToChannel": "WebDev Simplified"
+"subscribedToChannel": "Ahoy Matey!!!"
 }
+
 ###
-PATCH  http://localhost:3000/subscribers/5e287948dee9ca39702907ae
+PATCH  http://localhost:5000/subscribers/5e2897b50845fb57f0812638
 Content-Type: application/json
 
 {
 "name": "Martin Shungoh",
-"subscribedToChannel": "WebDevSimplified"
+"subscribedToChannel": "Ahoy! Ahoy! Fornication Pleeeeeee!!!"
 }
