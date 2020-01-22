@@ -27,6 +27,25 @@ Content-Type: application/json
 
 ###
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Get ALL Records
 GET http://localhost:5000/photos
 
