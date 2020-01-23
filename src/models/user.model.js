@@ -5,6 +5,7 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
+        match: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
         unique: true,
         trim: true,
         validate(value) {
@@ -28,9 +29,10 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
-    createdAt: {
+    userCreatedDate: {
         type: Date,
-        dafault: Date.now
+        required: true,
+        default: Date.now
     }
 })
 

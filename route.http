@@ -96,15 +96,24 @@ Content-Type: application/json
 
 
 // Get ALL Records
-GET http://localhost:3000/users
-
+GET http://localhost:3000/users/all
 // Get One Record
 ###
-GET http://localhost:3000/users/921
+GET http://localhost:3000/users/5e29a3bb1f21662b50621ebd
 
 //Delete One Record
 ###
-DELETE http://localhost:3000/users/5e28794bdee9ca39702907af
+DELETE http://localhost:3000/users/5e29a3bb1f21662b50621ebd
+
+// Add One Record
+###
+POST http://localhost:3000/users/register
+Content-Type: application/json
+
+{
+"email": "admin4@gmail.com",
+"password": "ashyslashy"
+}
 
 // Add One Record
 ###
@@ -112,16 +121,16 @@ POST http://localhost:3000/users/login
 Content-Type: application/json
 
 {
-"email": "ashvsevidead@gmail.com",
+"email": "admin4@gmail.com",
 "password": "ashyslashy"
 }
 
 // Update One Record
 ###
-PATCH  http://localhost:3000/users/5e2897b50845fb57f0812638
+PATCH  http://localhost:3000/users/5e29b1281756354344ef9acd
 Content-Type: application/json
 
 {
-"name": "Martin Shungoh",
-"url": "Ahoy! Ahoy! Fornication Pleeeeeee!!!"
+"email": "admin54@gmail.com",
+"password": "TheGameBeganBeforeItEnded"
 }
