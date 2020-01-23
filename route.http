@@ -105,7 +105,7 @@ GET http://localhost:3000/users/5e29a3bb1f21662b50621ebd
 ###
 DELETE http://localhost:3000/users/5e29a3bb1f21662b50621ebd
 
-// Add One Record
+// Register
 ###
 POST http://localhost:3000/users/register
 Content-Type: application/json
@@ -115,10 +115,11 @@ Content-Type: application/json
 "password": "ashyslashy"
 }
 
-// Add One Record
+// Login
 ###
 POST http://localhost:3000/users/login
 Content-Type: application/json
+//Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluNEBnbWFpbC5jb20iLCJ1c2VySWQiOiI1ZTI5YTNjZjZkYTc4ZDNjNjAzNGJhZjYiLCJpYXQiOjE1Nzk3OTQyNzcsImV4cCI6MTU3OTc5Nzg3N30.TrH4b_Z0ZIi6rCxkzHwlbJ6ElIbTb1fRpPKOvVY_66Q
 
 {
 "email": "admin4@gmail.com",

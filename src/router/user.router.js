@@ -23,7 +23,7 @@ User = require('../models/user.model')
 // })
 
 
-// const authenticate = require('../middleware/auth')
+const authenticate = require('../middleware/auth.middle')
 
 // Getting all Subscribers
 router.get('/all', async (req, res) => {
@@ -96,60 +96,9 @@ router.post('/register', async (req, res) => {
     })
 })
 
-router.post('/login', async (req, res, next) => {
-    User.find({ email: req.body.email })
-        .exec()
-        .then(
-            user => {
-                if (user.length < 1) {
-                    console.log(
-                        'Unauthorized'
-                    );
+router.post('/login', comparePass, authenticate, async (req, res, next) => {
+    console.log('Generated Auth Token', res.genToken);
 
-                    return res.status(401).json({
-                        message: 'Unauthorized'
-                    })
-                }
-                console.log('Hello');
-                bcrypt.compare(req.body.password, user[0].password, (err, result) => {
-                    if (err) {
-                        return res.status(401).json({
-                            message: 'Auth Failed'
-                        })
-                    }
-                    if (result) {
-                        const token = jwt.sign(
-                            {
-                                email: user[0].email,
-                                userId: user[0]._id
-                            },
-                            process.env.JWT_KEY,
-                            {
-                                expiresIn: "1h"
-                            }
-
-                        )
-                        return res.status(200).json({
-                            message: 'Auth Successful',
-                            token: token
-                        })
-                    }
-                    return res.status(401).json({
-                        message: 'Auth Failed'
-                    })
-                })
-
-                // else {
-                //     return res.status(201).json({
-                //         message: 'User Found'
-                //     })
-                // }
-            }
-        )
-        .catch(error => {
-            res.status(500).json({ message: error.message })
-        }
-        )
 })
 
 // Deleting one
@@ -200,7 +149,9 @@ router.patch('/:id', getUser, async (req, res) => {
 async function getUser(req, res, next) {
     let user
     try {
+
         user = await User.findById(req.params.id)
+
         if (user == null) {
             console.log('DOC ID was available but is inexistent at the the moment');
 
@@ -212,11 +163,46 @@ async function getUser(req, res, next) {
         return res.status(500).json({ message: error.message })
     }
     res.user = user
-    // console.log('Let', subscriber);
-    // console.log('Res', res.subscriber);
-
     next()
 
 }
 
+// Function for Comparing User PassWord
+async function comparePass(req, res, next) {
+    try {
+        authUser = await User.find({ email: req.body.email })
+        if (authUser < 1) {
+            return res.status(401).json({ message: 'Generating Token Failed' })
+        }
+        bcrypt.compare(req.body.password, authUser[0].password, async (err, result) => {
+            if (err) {
+                return res.status(401).json({
+                    message: 'Auth Failed'
+                })
+            }
+            if (result) {
+                let genToken
+                const finalToken = jwt.sign(
+                    {
+                        email: authUser[0].email,
+                        UserId: authUser[0]._id
+                    },
+                    process.env.JWT_KEY,
+                    {
+                        expiresIn: "1h"
+                    }
+                )
+                res.status(200).json({
+                    message: 'Generated Auth Token ',
+                    token: finalToken
+                })
+                res.genToken = finalToken
+                next()
+            }
+        })
+    }
+    catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+}
 module.exports = router
