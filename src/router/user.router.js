@@ -65,7 +65,6 @@ router.get('/:id', getUser, (req, res) => {
 })
 
 router.post('/register', async (req, res) => {
-
     bcrypt.hash(req.body.password, 10, (error, hash) => {
         if (error) {
             return res.status(500).json({ ErrorMessage: error })
@@ -75,7 +74,6 @@ router.post('/register', async (req, res) => {
                 email: req.body.email,
                 password: hash
             })
-
             user.save()
                 .then(result => {
                     console.log('Result:', result)
@@ -97,7 +95,7 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/login', comparePass, authenticate, async (req, res, next) => {
-    console.log('Generated Auth Token', res.genToken);
+    console.log('Generated Auth Token\n\n', res.genToken);
 
 })
 
@@ -149,12 +147,9 @@ router.patch('/:id', getUser, async (req, res) => {
 async function getUser(req, res, next) {
     let user
     try {
-
         user = await User.findById(req.params.id)
-
         if (user == null) {
             console.log('DOC ID was available but is inexistent at the the moment');
-
             return res.status(404).json({ message: 'Cannot find user' })
         }
         console.log('getUser Ran');
@@ -164,9 +159,7 @@ async function getUser(req, res, next) {
     }
     res.user = user
     next()
-
 }
-
 // Function for Comparing User PassWord
 async function comparePass(req, res, next) {
     try {
