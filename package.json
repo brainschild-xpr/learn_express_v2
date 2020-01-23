@@ -4,9 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    
     "start": "nodemon server.js",
-    "test": "nodemon src/index.js"
+    "dev": "nodemon src/index.js"
   },
   "author": "BCXPR",
   "license": "ISC",

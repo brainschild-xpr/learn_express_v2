@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
         const decoded = jwt.verify(bodyToken, process.env.JWT_KEY)
         req.userData = decoded
 
-        console.log('Successfully Decoded:', decoded);
+        console.log('Successfully Decoded:\n', decoded);
 
         next()
     } catch (error) {
