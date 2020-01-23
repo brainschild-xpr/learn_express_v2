@@ -95,25 +95,59 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/login', comparePass, authenticate, async (req, res, next) => {
-    console.log('Generated Auth Token\n\n', res.genToken);
+    console.log('\nGenerated Auth Token\n\n', res.genToken);
+    console.log("");
+    // bcrypt.hash(req.body.password, 10, (error, hash) => {
+    //     if (error) {
+    //         return res.status(500).json({ ErrorMessage: error })
+    //     }
+    //     else {
+    //         const user = new User({
+    //             email: req.body.email,
+    //             password: hash,
+    //             token: res.genToken
+    //         })
+    //         user.save()
+    //             .then(result => {
+    //                 console.log('Result:', result)
+    //                 res.status(200).json({
+    //                     message: 'User Created Succesfully',
+    //                     // result: result
+    //                 })
+    //             })
+    //         //             .catch(error => {
+    //         //                 console.log('Error', error)
+    //         //                 res.status(500).json({
+    //         //                     message: 'Error Creating User',
+    //         //                     error: error
+    //         //                 })
+    //         //             }
+    //         //             );
+    //     }
+    // })
 
 })
 
+router.post('/generate', comparePass, authenticate, async (req, res, next) => {
+    console.log('\nGenerated Auth Token\n\n', res.genToken);
+    console.log("");
+})
+
 // Deleting one
-router.delete('/:id', getUser, async (req, res) => {
+router.delete('/:id', getUser, comparePass, async (req, res) => {
     console.log('\nRunning from DELETE/:id');
 
     console.log({
         'Will be deleting DOC with ID': res.user._id,
         'JSON DOC To Be Deleted': res.user
     });
-    try {
-        await res.user.remove()
-        res.json({ message: 'user Deleted' })
-        console.log('DOCUMENT DELETED');
-    } catch (error) {
-        res.status(500).json({ message: error.message })
-    }
+    // try {
+    //     await res.user.remove()
+    //     res.json({ message: 'user Deleted' })
+    //     console.log('DOCUMENT DELETED');
+    // } catch (error) {
+    //     res.status(500).json({ message: error.message })
+    // }
 })
 
 // Updating one
@@ -174,22 +208,23 @@ async function comparePass(req, res, next) {
                 })
             }
             if (result) {
-                let genToken
-                const finalToken = jwt.sign(
-                    {
-                        email: authUser[0].email,
-                        UserId: authUser[0]._id
-                    },
-                    process.env.JWT_KEY,
-                    {
-                        expiresIn: "1h"
-                    }
-                )
-                res.status(200).json({
-                    message: 'Generated Auth Token ',
-                    token: finalToken
-                })
-                res.genToken = finalToken
+                // let genToken
+                // const finalToken = jwt.sign(
+                //     {
+                //         email: authUser[0].email,
+                //         UserId: authUser[0]._id
+                //     },
+                //     process.env.JWT_KEY,
+                //     {
+                //         expiresIn: "1h"
+                //     }
+                // )
+                // res.status(200).json({
+                //     message: 'Generated Auth Token ',
+                //     token: finalToken
+                // })
+                // res.genToken = finalToken
+
                 next()
             }
         })

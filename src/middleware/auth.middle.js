@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
         // console.log('\nExtracted Useable Token:', token);
         const decoded = jwt.verify(bodyToken, process.env.JWT_KEY)
         req.userData = decoded
-        console.log('Successfully Decoded:\n', decoded);
+        console.log('\nSuccessfully Decoded:\n', decoded);
         next()
     } catch (error) {
         return res.status(401).json({
