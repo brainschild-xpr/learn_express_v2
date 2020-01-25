@@ -1,7 +1,10 @@
 require('dotenv').config()
-
+const path = require('path')
 const express = require('express')
 const mongoose = require('mongoose')
+const expr_hdbr = require('express-handlebars')
+
+
 
 const PORT = 5000
 const mongoUri = process.env.DB_Uri
@@ -42,6 +45,18 @@ mongoose.connect(db_photos_url, {
 })
 
 app.use(express.json())
+
+const main_layout = path.join(__dirname, 'views/main_layout')
+
+app.engine('handlebars', expr_hdbr({
+    defaultLayout: 'main',
+    layoutsDir: main_layout
+}))
+app.set('view engine', 'handlebars')
+
+app.get('/', function (req, res) {
+    res.render('home')
+})
 
 const subscribersRouter = require('./routes/subscribers.route')
 app.use('/subscribers', subscribersRouter)
