@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
+const expr_hdbr = require('express-handlebars')
 // const { ObjectID } = require('mongodb')
 
 const router = express.Router()
@@ -24,6 +25,14 @@ User = require('../models/user.model')
 
 
 const authenticate = require('../middleware/auth.middle')
+
+const main_layout = path.join(__dirname, 'views/main_layout')
+
+app.engine('handlebars', expr_hdbr({
+    defaultLayout: 'main',
+    layoutsDir: main_layout
+}))
+app.set('view engine', 'handlebars')
 
 // Getting all Subscribers
 router.get('/all', async (req, res) => {

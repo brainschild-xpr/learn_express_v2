@@ -1,6 +1,24 @@
 const express = require('express')
 const router = express.Router()
+const path = require('path')
+const expr_hdbr = require('express-handlebars')
 
+const main_layout = path.join(__dirname, '../views/main_layout')
+console.log(main_layout);
+
+const app = express()
+
+app.engine('handlebars', expr_hdbr({
+    defaultLayout: 'main',
+    layoutsDir: main_layout
+}))
+app.set('view engine', 'handlebars')
+
+router.get('/test', function (req, res) {
+    res.render('home')
+})
+
+// '.views/main_layout')
 Photo = require('../models/photos.model')
 
 // Getting all Subscribers
@@ -9,7 +27,17 @@ router.get('/', async (req, res) => {
         //   res.send('You have reached the Photos page')
         const photos = await Photo.find()
         console.log(photos);
-        res.json(photos)
+        const parse = photos[0]
+        const one = {
+            _id: '923',
+            title: 'Yonko Kaido vs Luffy',
+            url: 'https://res.cloudinary.com/daluwid/image/upload/v1541146124/one-piece-cover-923.png',
+            url_2: '',
+            subscribeDate: '2020-01-22T20:23:22.330Z',
+            __v: '0'
+        }
+        // res.json(photos)
+        res.render('home', { photos: one })
 
     } catch (error) {
         res.status(500).json({ message: error.message })
@@ -46,7 +74,7 @@ router.post('/', async (req, res) => {
         title: req.body.title,
         url: req.body.url,
         url_2: req.body.url_2,
-        
+
     })
     try {
         const newPhoto = await photo.save()
